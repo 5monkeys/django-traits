@@ -3,6 +3,12 @@
 Define traits for Django models that works seamlessly both in-Python and using the ORM,
 with coordinated tests.
 
+### Installation
+
+```bash
+$ python3 -m pip install django-traits
+```
+
 ### Example
 
 ```python
