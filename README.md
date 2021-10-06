@@ -35,3 +35,20 @@ if person.is_rich:
 else:
     print("This person is not rich")
 ```
+
+The automated test factory makes it simple to write tests that guarantess
+that the in-Python and ORM predicates stay in sync.
+
+```python
+class TestPerson:
+    test_is_rich = test_trait(
+        (
+            (PersonFactory(), False),
+            (PersonFactory(income=1000), False),
+            (PersonFactory(income=1001), True),
+        )
+    )
+```
+
+The above example will generate tests that exercises the in-Python predicate on instances of `Person`,
+as well as tests that tries to filter using the ORM predicate.
