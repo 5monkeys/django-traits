@@ -37,7 +37,7 @@ else:
 ```
 
 The automated test factory makes it simple to write tests that guarantess
-that the in-Python and ORM predicates stay in sync.
+that the in-Python predicate stays in sync with its ORM counterpart.
 
 ```python
 class TestPerson:
