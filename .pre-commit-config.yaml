@@ -58,6 +58,8 @@ repos:
         args: []
         additional_dependencies:
           - pytest
+          - django
+          - django-stubs
   - repo: https://github.com/mgedmin/check-manifest
     rev: "0.47"
     hooks:
