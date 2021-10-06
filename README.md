@@ -51,4 +51,6 @@ class TestPerson:
 ```
 
 The above example will generate tests that exercises the in-Python predicate on instances of `Person`,
-as well as tests that tries to filter using the ORM predicate.
+as well as tests that tries to filter using the ORM predicate. That means that if the implementations
+were to drift apart, for instance if the limit was increased to `2000` in `check_instance()` but not
+in `as_q()`, the tests would fail.
