@@ -1,12 +1,15 @@
 from typing import Callable
 from typing import TypeVar
 
+from django.db import models
+
 from traits import Trait
 
-M = TypeVar("M")
+M = TypeVar("M", bound=models.Model)
 
 
 def create_trait_test(trait: Trait[M]) -> Callable[[M], None]:
+    assert trait._model is not None, "Can't test unbound Trait"
     model = trait._model
     attribute_name = next(
         name for name, value in model.__dict__.items() if value == trait

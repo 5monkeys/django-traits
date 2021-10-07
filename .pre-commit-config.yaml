@@ -60,6 +60,7 @@ repos:
           - pytest
           - django
           - django-stubs
+          - hypothesis
   - repo: https://github.com/mgedmin/check-manifest
     rev: "0.47"
     hooks:
