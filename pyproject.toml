@@ -4,3 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.black]
 target-version = ["py39"]
+
+[tool.pytest.ini_options]
+addopts = "--create-db --doctest-modules"
+testpaths = ["tests"]
