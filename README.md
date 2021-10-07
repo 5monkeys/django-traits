@@ -17,11 +17,10 @@ $ python3 -m pip install django-traits
 
 ```python
 class Rich(Trait["Person"]):
+    q = models.Q(income__gt=1000)
+
     def check_instance(self, instance: Person) -> bool:
         return instance.income > 1000
-
-    def as_q(self) -> models.Q:
-        return models.Q(income__gt=1000)
 
 
 class Person(models.Model):
@@ -29,7 +28,7 @@ class Person(models.Model):
     income = models.PositiveIntegerField()
 
 
-# Filter for rich people, this uses the ORM predicate as defined in as_q().
+# Filter for rich people, this uses the ORM predicate as defined in q.
 rich_people = Person.is_rich.all()
 
 # Check if a person is rich, this uses the in-Python predicate as defined in check_instance().
@@ -40,8 +39,8 @@ else:
     print("This person is not rich")
 ```
 
-The automated test factory makes it simple to write tests that guarantees
-that the in-Python predicate stays in sync with its ORM counterpart.
+The automated test factory makes it simple to write tests that guarantees that the
+in-Python predicate stays in sync with its ORM counterpart.
 
 ```python
 class TestPerson:
@@ -54,7 +53,7 @@ class TestPerson:
     )
 ```
 
-The above example will generate tests that exercises the in-Python predicate on instances of `Person`,
-as well as tests that tries to filter using the ORM predicate. That means that if the implementations
-were to drift apart, for instance if the limit was increased to `2000` in `check_instance()` but not
-in `as_q()`, the tests would fail.
+The above example will generate tests that exercises the in-Python predicate on
+instances of `Person`, as well as tests that tries to filter using the ORM predicate.
+That means that if the implementations were to drift apart, for instance if the limit
+was increased to `2000` in `check_instance()` but not in `q`, the tests would fail.

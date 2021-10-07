@@ -6,11 +6,10 @@ from traits import Trait
 
 
 class Rich(Trait["Person"]):
+    q = models.Q(income__gt=1000)
+
     def check_instance(self, instance: Person) -> bool:
         return instance.income > 1000
-
-    def as_q(self) -> models.Q:
-        return models.Q(income__gt=1000)
 
 
 class Person(models.Model):
