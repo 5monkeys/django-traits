@@ -1,0 +1,17 @@
+- case: test_reveals_correct_bound_types
+  main: |
+    from traits import Trait
+    from django.db import models
+    class Bar(Trait[models.Model]):
+        q = models.Q()
+        def check_instance(self, instance: models.Model) -> bool:
+            return True
+    class Foo(models.Model):
+        t = Bar()
+        class Meta:
+            app_label = "app"
+    reveal_type(Foo().t) # N: Revealed type is "builtins.bool"
+    reveal_type(Foo.t) # N: Revealed type is "main.Bar"
+  mypy_config: |
+    [mypy-django.*]
+    ignore_errors = True
