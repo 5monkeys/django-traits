@@ -44,20 +44,52 @@ else:
 ```
 
 The automated test factory makes it simple to write tests that guarantees that the
-in-Python predicate stays in sync with its ORM counterpart.
+in-Python predicate stays in sync with its ORM counterpart. The following example
+generates parameterized tests that checks boundary values.
+
+
 
 ```python
+import pytest
+from traits.tests import create_trait_test
+
+
+parametrize_people = pytest.mark.parametrize(
+    "instance",
+    PersonFactory(),
+    PersonFactory(income=1000),
+    PersonFactory(income=1001),
+)
+
+
 class TestPerson:
-    test_is_rich = test_trait(
-        (
-            (PersonFactory(), False),
-            (PersonFactory(income=1000), False),
-            (PersonFactory(income=1001), True),
-        )
-    )
+    test_is_rich = parametrize_people(create_trait_test(Person.is_rich))
 ```
 
-The above example will generate tests that exercises the in-Python predicate on
-instances of `Person`, as well as tests that tries to filter using the ORM predicate.
-That means that if the implementations were to drift apart, for instance if the limit
-was increased to `2000` in `check_instance()` but not in `q`, the tests would fail.
+The above example will generate three tests that checks that each given instance of
+`Person` only appears in an ORM query result if the trait evaluates to `True` for that
+instance, and that the result set is empty if it evaluates to `False`. So if the
+implementations were to drift apart, for instance if the limit was increased to `2000`
+in `check_instance()` but not in `q`, the tests would fail and enforce that the two
+implementations are in sync.
+
+You can also use [Hypothesis] to automatically generate test values.
+
+```python
+from traits.tests import create_trait_test
+from hypothesis import given
+from hypothesis.strategies import builds
+from hypothesis.strategies import integers
+
+people = builds(
+    PersonFactory.build,
+    income=integers(-9223372036854775808, 9223372036854775807),
+)
+
+
+class TestPerson:
+    test_is_rich = given(people)(create_trait_test(Person.is_rich))
+```
+
+
+[Hypothesis]: https://github.com/HypothesisWorks/hypothesis
