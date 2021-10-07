@@ -1,5 +1,9 @@
 <h1 align=center>django-traits</h1>
 
+<p align=center>
+    <a href=https://github.com/5m/django-traits/actions?query=workflow%3ACI+branch%3Amain><img src=https://github.com/5m/django-traits/workflows/CI/badge.svg alt="CI Build Status"></a>
+</p>
+
 Define traits for Django models that works seamlessly both in-Python and using the ORM,
 with coordinated tests.
 
@@ -36,7 +40,7 @@ else:
     print("This person is not rich")
 ```
 
-The automated test factory makes it simple to write tests that guarantess
+The automated test factory makes it simple to write tests that guarantees
 that the in-Python predicate stays in sync with its ORM counterpart.
 
 ```python
