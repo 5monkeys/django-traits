@@ -33,4 +33,15 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('setup.cfg') }}
           restore-keys: ${{ runner.os }}-pip
       - run: pip install -e '.[test]'
-      - run: pytest
+      - name: Run test suite
+        run: coverage run -m pytest
+      - name: Build coverage report
+        run: |
+          coverage report
+          coverage xml
+      - name: Report coverage
+        uses: codecov/codecov-action@v1
+        with:
+          file: coverage.xml
+          fail_ci_if_error: true
+          name: codecov-py${{ matrix.python-version }}
