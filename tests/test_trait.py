@@ -9,5 +9,5 @@ def test_basics() -> None:
     poor = Person.objects.create(income=500)
     query_rich = Person.is_rich.all()
     assert list(query_rich) == [rich]
-    query_poor = Person.objects.filter(~Person.is_rich.as_q())
+    query_poor = Person.objects.filter(~Person.is_rich.q)
     assert list(query_poor) == [poor]

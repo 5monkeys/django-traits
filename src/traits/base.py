@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import abc
+from functools import cached_property
 from typing import Generic
 from typing import TypeVar
+from typing import final
 from typing import overload
 
 from django.db import models
@@ -21,6 +23,11 @@ class Trait(Generic[M], abc.ABC):
     @abc.abstractmethod
     def check_instance(self, instance: M) -> bool:
         ...
+
+    @final
+    @cached_property
+    def q(self) -> models.Q:
+        return self.as_q()
 
     def all(self) -> models.QuerySet[M]:
         # TODO: Good error message.
