@@ -5,6 +5,7 @@
 
 <p align=center>
     <a href=https://github.com/5monkeys/django-traits/actions?query=workflow%3ACI+branch%3Amain><img src=https://github.com/5monkeys/django-traits/workflows/CI/badge.svg alt="CI Build Status"></a>
+    <a href=https://codecov.io/gh/5monkeys/django-traits><img src="https://codecov.io/gh/5monkeys/django-traits/branch/main/graph/badge.svg?token=U6BK5DWAWD" alt="Test coverage reports"/></a>
 </p>
 
 Define traits for Django models that works seamlessly both in-Python and using the ORM,
