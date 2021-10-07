@@ -1,6 +1,7 @@
 recursive-exclude .github *
 recursive-exclude tests *
 recursive-include src py.typed
+recursive-exclude docs *
 exclude *.yaml
 exclude *.yml
 exclude .editorconfig

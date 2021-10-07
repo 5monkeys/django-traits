@@ -1,3 +1,6 @@
+<p align=center><img src=docs/logo.svg width=200/></p>
+
+
 <h1 align=center>django-traits</h1>
 
 <p align=center>
