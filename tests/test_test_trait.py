@@ -1,8 +1,10 @@
 import pytest
+from django.db import models
 from hypothesis import given
 from hypothesis.strategies import builds
 from hypothesis.strategies import integers
 
+from traits import Trait
 from traits.tests import create_trait_test
 
 from .app.models import BrokenModel
@@ -21,3 +23,21 @@ test_generated_tests_for_broken_passes = pytest.mark.xfail(strict=True)(
         pytest.mark.django_db(transaction=True)(create_trait_test(BrokenModel.foo))
     )
 )
+
+
+def test_model_missing_trait_raises_stop_iteration() -> None:
+    class T(Trait):
+        q = models.Q()
+
+        def check_instance(self, instance: models.Model) -> bool:
+            return True
+
+    class A:
+        t = T()
+
+    class B:
+        t = T()
+
+    A.t, B.t = B.t, A.t
+    with pytest.raises(StopIteration):
+        create_trait_test(A.t)
