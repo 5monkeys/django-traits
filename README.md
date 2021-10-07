@@ -1,7 +1,7 @@
 <h1 align=center>django-traits</h1>
 
 <p align=center>
-    <a href=https://github.com/5m/django-traits/actions?query=workflow%3ACI+branch%3Amain><img src=https://github.com/5m/django-traits/workflows/CI/badge.svg alt="CI Build Status"></a>
+    <a href=https://github.com/5monkeys/django-traits/actions?query=workflow%3ACI+branch%3Amain><img src=https://github.com/5monkeys/django-traits/workflows/CI/badge.svg alt="CI Build Status"></a>
 </p>
 
 Define traits for Django models that works seamlessly both in-Python and using the ORM,
