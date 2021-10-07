@@ -66,10 +66,12 @@ class TestPerson:
     test_is_rich = parametrize_people(create_trait_test(Person.is_rich))
 ```
 
-The above example will generate tests that exercises the in-Python predicate on
-instances of `Person`, as well as tests that tries to filter using the ORM predicate.
-That means that if the implementations were to drift apart, for instance if the limit
-was increased to `2000` in `check_instance()` but not in `q`, the tests would fail.
+The above example will generate three tests that checks that each given instance of
+`Person` only appears in an ORM query result if the trait evaluates to `True` for that
+instance, and that the result set is empty if it evaluates to `False`. So if the
+implementations were to drift apart, for instance if the limit was increased to `2000`
+in `check_instance()` but not in `q`, the tests would fail and enforce that the two
+implementations are in sync.
 
 You can also use [Hypothesis] to automatically generate test values.
 
@@ -79,7 +81,10 @@ from hypothesis import given
 from hypothesis.strategies import builds
 from hypothesis.strategies import integers
 
-people = builds(Person, income=integers(-9223372036854775808, 9223372036854775807))
+people = builds(
+    PersonFactory.build,
+    income=integers(-9223372036854775808, 9223372036854775807),
+)
 
 
 class TestPerson:
